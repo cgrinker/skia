@@ -24,9 +24,14 @@
       steps:
         # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
         - uses: actions/checkout@v2
+        
+        - name: Install Ninja
+          uses: crazy-max/ghaction-chocolatey@v1
+          with:
+            args: install ninja
+
         - name: Run a multi-line script
           run: |
-            choco install --yes ninja
             python tools/git-sync-deps
             mkdir out/Shared
             cp .github/workflows/args_win_static.gn out/Shared/args.gn
@@ -36,6 +41,7 @@
             mkdir out\Shared\bundle\include
             cp .\out\Shared\*.lib .\out\Shared\bundle\lib\
             xcopy /e .\include\ .\out\Shared\bundle\include\ 
+            
         - uses: actions/upload-artifact@v2
           with:
             name: skia_winx64
