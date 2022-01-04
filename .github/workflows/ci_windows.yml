@@ -2,9 +2,7 @@
 
   name: CI
 
-  # Controls when the workflow will run
   on:
-    # Triggers the workflow on push or pull request events but only for the main branch
     push:
       branches: [ main ]
     pull_request:
@@ -30,20 +28,20 @@
           with:
             args: install ninja
 
-#         - name: Sync Deps
-#           run: python tools/git-sync-deps
+        - name: Sync Deps
+          run: python tools/git-sync-deps
           
         - name: Prepare Workspace
           run: |
             mkdir out/Shared
             cp .github/workflows/args_win_static.gn out/Shared/args.gn
         
-#         - name: Run GN
-#           run: bin/gn gen out/Shared
+        - name: Run GN
+          run: bin/gn gen out/Shared
             
             
         - name: Build Skia
-          run: copy README .\out\Shared\ #ninja -C .\out\Shared\
+          run: ninja -C .\out\Shared\
          
         - name: Bundle Artifacts
           run: Copy-Item 'include' -Destination 'out\Shared\' -Recurse
@@ -51,4 +49,4 @@
         - uses: actions/upload-artifact@v2
           with:
             name: skia_winx64
-            path: out/Shared # or path/to/artifact  
+            path: out/Shared
