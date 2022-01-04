@@ -30,19 +30,21 @@
           with:
             args: install ninja
 
-        - name: Run a multi-line script
+        - name: Prepare Workspace
           run: |
             python tools/git-sync-deps
             mkdir out/Shared
             cp .github/workflows/args_win_static.gn out/Shared/args.gn
             bin/gn gen out/Shared
-            ninja -C .\out\Shared\
-            mkdir out\Shared\bundle\lib
-            mkdir out\Shared\bundle\include
-            cp .\out\Shared\*.lib .\out\Shared\bundle\lib\
-            xcopy /e .\include\ .\out\Shared\bundle\include\ 
+            mkdir out\Shared\include
+            
+        - name: Build Skia
+          run: copy README .\out\Shared\ #ninja -C .\out\Shared\
+         
+        - name: Bundle Artifacts
+          run: xcopy /e .\include\ .\out\Shared\include\ 
             
         - uses: actions/upload-artifact@v2
           with:
             name: skia_winx64
-            path: out/Shared/bundle # or path/to/artifact  
+            path: out/Shared # or path/to/artifact  
