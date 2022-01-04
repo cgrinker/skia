@@ -26,7 +26,7 @@
         - uses: actions/checkout@v2
         - name: Run a multi-line script
           run: |
-            choco install ninja
+            choco install --yes ninja
             python tools/git-sync-deps
             mkdir out/Shared
             cp .github/workflows/args_win_static.gn out/Shared/args.gn
