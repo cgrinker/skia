@@ -30,19 +30,23 @@
           with:
             args: install ninja
 
+#         - name: Sync Deps
+#           run: python tools/git-sync-deps
+          
         - name: Prepare Workspace
           run: |
-            python tools/git-sync-deps
             mkdir out/Shared
             cp .github/workflows/args_win_static.gn out/Shared/args.gn
-            bin/gn gen out/Shared
-            mkdir out\Shared\include
+        
+#         - name: Run GN
+#           run: bin/gn gen out/Shared
+            
             
         - name: Build Skia
           run: copy README .\out\Shared\ #ninja -C .\out\Shared\
          
         - name: Bundle Artifacts
-          run: xcopy /e .\include\ .\out\Shared\include\ 
+          run: Copy-Item 'include' -Destination 'out\Shared\' -Recurse
             
         - uses: actions/upload-artifact@v2
           with:
