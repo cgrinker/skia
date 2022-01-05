@@ -17,8 +17,8 @@
         # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
         - uses: actions/checkout@v2
         
-        - name: Install Ninja
-          run: sudo apt-get install -y ninja-build
+        - name: Install Ninja And Deps
+          run: sudo apt-get install -y ninja-build libgl-dev xorg-dev libjpeg-dev libwebp-dev
 
         - name: Sync Deps
           run: python tools/git-sync-deps
