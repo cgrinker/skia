@@ -18,7 +18,7 @@
         - uses: actions/checkout@v2
         
         - name: Install Ninja And Deps
-          run: sudo tools/install_dependencies.sh
+          run: sudo apt-get install -y ninja-build && sudo tools/install_dependencies.sh
 
         - name: Sync Deps
           run: python tools/git-sync-deps
