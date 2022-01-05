@@ -25,11 +25,11 @@
           
         - name: Prepare Workspace
           run: |
-            mkdir out/Shared
+            mkdir -p out/Shared
             cp .github/workflows/args_linux_static.gn out/Shared/args.gn
         
         - name: Run GN
-          run: bin/gn gen out/Shared
+          run: bin/gn gen ./out/Shared
             
             
         - name: Build Skia
